@@ -1,0 +1,12 @@
+{
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "features": "Features",
+    "pricing": "Pricing",
+    "contact": "Contact",
+    "login": "Login",
+    "signup": "signup"
+  },
+  "welcome": "Welcome to our site!"
+}
