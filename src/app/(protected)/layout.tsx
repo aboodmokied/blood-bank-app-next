@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "../globals.css";
 import Providers from "../providers";
 import { getUserFromToken } from "@/lib/auth";
 import { redirect } from "next/navigation";
+
+import { Toaster } from "@/components/ui/sonner";
+
+const inter = Inter({ subsets: ["latin"] });
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,6 +29,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  
   const user = await getUserFromToken();
   console.log({user})
   return (
@@ -37,8 +42,8 @@ export default async function RootLayout({
             user
             ?children
             :redirect('/login') // TODO: use next-intel 
-
           }
+            <Toaster position="top-center" />
         </body>
       </html>
     </Providers>
