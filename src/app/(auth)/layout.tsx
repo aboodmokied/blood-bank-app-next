@@ -4,6 +4,8 @@ import "../globals.css";
 import Providers from "../providers";
 
 import { Toaster } from "@/components/ui/sonner";
+import { ThemeProvider } from "@/components/theme-provider";
+import { ModeToggle } from "@/components/mode-toggle";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,12 +32,22 @@ export default async function RootLayout({
   
   return (
     <Providers>
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
         >
-          {children}
-          <Toaster position="top-center" />
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+              {children}
+              <Toaster position="top-center" />
+          <div className="absolute bottom-2 right-2">
+            <ModeToggle/>
+          </div>
+          </ThemeProvider>
         </body>
       </html>
     </Providers>

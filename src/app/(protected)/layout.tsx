@@ -4,6 +4,7 @@ import "../globals.css";
 import Providers from "../providers";
 import { getUserFromToken } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import { ThemeProvider } from "@/components/theme-provider"
 
 import { Toaster } from "@/components/ui/sonner";
 
@@ -34,18 +35,26 @@ export default async function RootLayout({
   console.log({user})
   return (
     <Providers>
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning>
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          {
-            user
-            ?children
-            :redirect('/login') // TODO: use next-intel 
-          }
-            <Toaster position="top-center" />
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {
+              user
+              ?children
+              :redirect('/login') // TODO: use next-intel 
+            }
+              <Toaster position="top-center" />
+          </ThemeProvider>
         </body>
       </html>
     </Providers>
   );
 }
+
