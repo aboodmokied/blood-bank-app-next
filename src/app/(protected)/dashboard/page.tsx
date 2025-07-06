@@ -1,9 +1,13 @@
-import React from 'react'
+import { getUserFromToken } from "@/lib/auth";
 
-const Dashboard = () => {
+export default async function Dashboard() {
+
+  const user:any = await getUserFromToken();
+
   return (
-    <div>Dashboard</div>
-  )
+    <div>
+      <h1>Dashboard</h1>
+      <h1>{user.role}</h1>
+    </div>
+  );
 }
-
-export default Dashboard
