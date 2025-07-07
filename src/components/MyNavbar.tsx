@@ -39,14 +39,14 @@ export function Navbar() {
               className={`px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden me-2`}
             >
               <Menu className="h-5 w-5" />
-              <span className="sr-only">{t("toggleMenu")}</span>
+              <span className="sr-only">{"test1"}</span>
             </Button>
           </SheetTrigger>
           <SheetContent side={isRTL ? "right" : "left"} className="pr-0">
             <div className="flex h-full flex-col">
               <div className="flex items-center pb-6 pt-3">
                 <Link href="/" className="flex items-center space-x-2">
-                  <span className="font-bold">{t("brand")}</span>
+                  <span className="font-bold">{"test2"}</span>
                 </Link>
               </div>
               <div className="flex flex-1 flex-col space-y-3 overflow-y-auto">

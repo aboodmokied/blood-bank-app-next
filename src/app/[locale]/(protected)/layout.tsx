@@ -17,5 +17,8 @@ export default async function ProtectedLayout({
   const { locale } = await params;
   const user = await getUserFromToken();
   console.log({ user });
-  return <>{user ? children : redirect({ href: "", locale })}</>;
+  if (!user) {
+    redirect({ href: "/login", locale });
+  }
+  return <>{children}</>;
 }
