@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 import { Link } from "@/i18n/navigation";
-import { LocaleSwitcher } from "./LocaleSwitcher";
+import { LocaleSwitcher } from "./locale-switcher";
 import { useLocale, useTranslations } from "next-intl";
 
 const navItems = [

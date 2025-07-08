@@ -5,8 +5,6 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import Providers from "../providers";
-import { Navbar } from "@/components/MyNavbar";
-// import { getMessages } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
@@ -56,8 +54,7 @@ export default async function RootLayout({
               enableSystem
               disableTransitionOnChange
             >
-              <Navbar />
-              <main>{children}</main>
+              {children}
               <Toaster position="top-center" />
             </ThemeProvider>
           </NextIntlClientProvider>

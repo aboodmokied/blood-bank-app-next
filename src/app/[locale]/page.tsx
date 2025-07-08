@@ -1,7 +1,14 @@
-"use client";
+import Hero from "@/components/landing/hero";
+import LandingNavbar from "@/components/landing/landing-navbar";
 
-import { useTranslations } from "next-intl";
-export default function Home() {
-  const t = useTranslations();
-  return <h1 className="text-2xl font-bold">{t("welcome")}</h1>;
+export default function LandingPage() {
+  return (
+    <div className="container bg-gradient-to-br from-red-50 via-white to-red-50 mx-auto">
+      <LandingNavbar />
+      <main className="p-4">
+        <Hero />
+      </main>
+      <footer>Footer</footer>
+    </div>
+  );
 }
