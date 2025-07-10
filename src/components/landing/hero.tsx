@@ -1,8 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 const Hero = () => {
+  const t = useTranslations("hero");
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -33,8 +35,8 @@ const Hero = () => {
           }}
           className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight"
         >
-          Save Lives Through
-          <span className="text-red-600 block">Blood Donation</span>
+          {t("mainTitle")}
+          <span className="text-red-600 block">{t("subTitle")}</span>
         </motion.h1>
         <motion.p
           className="text-xl text-gray-600 mb-8 leading-relaxed"
@@ -43,8 +45,7 @@ const Hero = () => {
             duration: 0.8,
           }}
         >
-          Connect donors with those in need. Every donation can save up to three
-          lives.
+          {t("p")}
         </motion.p>
         <motion.div
           className="flex flex-col sm:flex-row gap-6 justify-center items-center"
@@ -65,10 +66,10 @@ const Hero = () => {
               ease: "easeInOut",
             }}
           >
-            Donate Blood Now
+            {t("donationButton")}
           </motion.button>
           <button className="border-2 border-red-600 text-red-600 hover:bg-red-600 hover:text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300">
-            Find Blood
+            {t("findButton")}
           </button>
         </motion.div>
       </motion.div>

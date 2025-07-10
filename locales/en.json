@@ -8,5 +8,12 @@
     "login": "Login",
     "signup": "signup"
   },
+  "hero": {
+    "mainTitle": "Save Lives Through",
+    "subTitle": "Blood Donation",
+    "p": "Connect donors with those in need. Every donation can save up to three lives.",
+    "donationButton": "Donate Blood Now",
+    "findButton": "Find Blood"
+  },
   "welcome": "Welcome to our site!"
 }
