@@ -1,19 +1,20 @@
 import { NAV_HEIGHT } from "@/constants";
 import { Link } from "@/i18n/navigation";
-import Image from "next/image";
 import React from "react";
 import { LocaleSwitcher } from "../locale-switcher";
 import { Button } from "../ui/button";
 import { Heart } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 const navLinks = [
-  { name: "Home", href: "/" },
-  { name: "About", href: "#about" },
-  { name: "Services", href: "#services" },
-  { name: "Contact", href: "#contact" },
+  { name: "home", href: "/" },
+  { name: "about", href: "#about" },
+  { name: "services", href: "#services" },
+  { name: "contact", href: "#contact" },
 ];
 
 export default function LandingNavbar() {
+  const t = useTranslations("header");
   return (
     <header
       style={{ height: `${NAV_HEIGHT}px` }}
@@ -42,7 +43,7 @@ export default function LandingNavbar() {
                 "text-gray-700 hover:text-red-600"
               }`}
             >
-              <span>{item.name}</span>
+              <span>{t(item.name)}</span>
             </a>
           </div>
         ))}
@@ -51,10 +52,10 @@ export default function LandingNavbar() {
       <div className="flex flex-1 items-center justify-end gap-2 md:w-[25%]">
         <LocaleSwitcher />
         <Button variant="ghost" size="sm" asChild>
-          <Link href="/login">{"login"}</Link>
+          <Link href="/login">{t("login")}</Link>
         </Button>
         <Button size="sm" className="bg-red-600" asChild>
-          <Link href="/signup">{"signup"}</Link>
+          <Link href="/signup">{t("signup")}</Link>
         </Button>
       </div>
     </header>

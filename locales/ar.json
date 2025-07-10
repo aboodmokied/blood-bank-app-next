@@ -1,9 +1,8 @@
 {
-  "navigation": {
+  "header": {
     "home": "الرئيسية",
     "about": "من نحن",
-    "features": "المزايا",
-    "pricing": "الاسعار",
+    "services": "خدماتنا",
     "contact": "اتصل بنا",
     "login": "تسجيل الدخول",
     "signup": "تسجيل"

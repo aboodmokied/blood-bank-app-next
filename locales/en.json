@@ -1,12 +1,11 @@
 {
-  "navigation": {
+  "header": {
     "home": "Home",
     "about": "About",
-    "features": "Features",
-    "pricing": "Pricing",
+    "services": "Services",
     "contact": "Contact",
     "login": "Login",
-    "signup": "signup"
+    "signup": "Signup"
   },
   "hero": {
     "mainTitle": "Save Lives Through",
