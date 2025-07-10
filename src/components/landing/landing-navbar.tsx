@@ -18,7 +18,7 @@ export default function LandingNavbar() {
   return (
     <header
       style={{ height: `${NAV_HEIGHT}px` }}
-      className="w-full sticky inset-0 flex items-center justify-between p-4 md:px-10 shadow-md"
+      className="w-full sticky inset-0 bg-white flex items-center justify-between p-4 md:px-10 shadow-md"
     >
       {/* Logo */}
       <div className="flex items-center space-x-3 md:w-[25%]">
@@ -51,7 +51,7 @@ export default function LandingNavbar() {
         ))}
       </nav>
       {/* Right side items - using logical properties */}
-      <div className="flex flex-1 items-center justify-end gap-2 md:w-[25%]">
+      <div className="flex flex-1 items-center justify-end gap-2 md:w-[25%] text-red-600">
         <LocaleSwitcher />
         <Button variant="ghost" size="sm" asChild>
           <Link href="/login">{t("login")}</Link>
