@@ -14,5 +14,10 @@
     "donationButton": "Donate Blood Now",
     "findButton": "Find Blood"
   },
+  "features": {
+    "emergency-support": "Emergency Support",
+    "registered-hospital": "Registered Hospital",
+    "active-donors": "Active Donors"
+  },
   "welcome": "Welcome to our site!"
 }

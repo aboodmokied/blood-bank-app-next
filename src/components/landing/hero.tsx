@@ -21,7 +21,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="pt-24 pb-16 px-4 text-center">
+    <section id="home" className="pt-24 pb-16 px-4 text-center">
       <motion.div
         className="max-w-4xl mx-auto"
         variants={container}

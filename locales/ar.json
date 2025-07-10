@@ -14,5 +14,10 @@
     "donationButton": "تبرع بالدم الآن",
     "findButton": "ابحث عن دم"
   },
+  "features": {
+    "emergency-support": "دعم الطوارئ",
+    "registered-hospital": "مستشفى مسجل",
+    "active-donors": "متبرعون نشطون"
+  },
   "welcome": "مرحباً بك في موقعنا!"
 }

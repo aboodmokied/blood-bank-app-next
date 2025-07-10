@@ -27,7 +27,9 @@ export default function LandingNavbar() {
         </div>
         <div>
           <h1 className="text-xl font-bold text-gray-900">LifeBank</h1>
-          <p className="text-xs text-gray-500">Blood Bank System</p>
+          <p className="hidden md:block text-xs text-gray-500">
+            Blood Bank System
+          </p>
         </div>
       </div>
 
@@ -54,7 +56,7 @@ export default function LandingNavbar() {
         <Button variant="ghost" size="sm" asChild>
           <Link href="/login">{t("login")}</Link>
         </Button>
-        <Button size="sm" className="bg-red-600" asChild>
+        <Button size="sm" className="bg-red-600 hover:bg-red-500" asChild>
           <Link href="/signup">{t("signup")}</Link>
         </Button>
       </div>
