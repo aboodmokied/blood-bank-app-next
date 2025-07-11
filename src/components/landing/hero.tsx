@@ -55,7 +55,7 @@ const Hero = () => {
           }}
         >
           <motion.button
-            className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
+            className="bg-red-600 relative z-1 hover:bg-red-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
             animate={{
               scale: [1, 1.3, 1],
             }}

@@ -18,7 +18,7 @@ export default function LandingNavbar() {
   return (
     <header
       style={{ height: `${NAV_HEIGHT}px` }}
-      className="w-full sticky inset-0 bg-white flex items-center justify-between p-4 md:px-10 shadow-md"
+      className="w-full sticky inset-0 z-10 bg-white flex items-center justify-between p-4 md:px-10 shadow-md"
     >
       {/* Logo */}
       <div className="flex items-center space-x-3 md:w-[25%]">
@@ -56,7 +56,11 @@ export default function LandingNavbar() {
         <Button variant="ghost" size="sm" asChild>
           <Link href="/login">{t("login")}</Link>
         </Button>
-        <Button size="sm" className="bg-red-600 hover:bg-red-500" asChild>
+        <Button
+          size="sm"
+          className="bg-red-600 hover:bg-red-500 text-white"
+          asChild
+        >
           <Link href="/signup">{t("signup")}</Link>
         </Button>
       </div>
