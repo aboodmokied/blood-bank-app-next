@@ -27,7 +27,7 @@ const Stats = () => {
   ];
   return (
     <section id="stats" className="py-16 bg-white">
-      <div className="max-w-6xl mx-auto px-4">
+      <div className="mx-auto container p-4">
         <motion.div
           variants={containerVariants}
           initial="hidden"

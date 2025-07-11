@@ -23,7 +23,7 @@ const Hero = () => {
   return (
     <section id="home" className="pt-24 pb-16 px-4 text-center">
       <motion.div
-        className="max-w-4xl mx-auto"
+        className="mx-auto container p-4"
         variants={container}
         initial="hidden"
         animate="show"

@@ -41,5 +41,58 @@
     "appointmentsTitle": "Online Appointments",
     "appointmentsDesc": "Allow donors to schedule their visits easily and receive reminders to maintain regular donations."
   },
+  "donorRegister": {
+    "title": "How It Works",
+    "description": "Simple steps to become a life-saver and help those in need of blood donations.",
+    "steps": {
+      "register": {
+        "title": "Register",
+        "description": "Sign up as a donor by providing your basic information and medical history for eligibility screening."
+      },
+      "schedule": {
+        "title": "Schedule",
+        "description": "Book an appointment at your preferred time and location, or join a mobile blood drive near you."
+      },
+      "donate": {
+        "title": "Donate",
+        "description": "Complete your donation in a safe, comfortable environment with trained medical professionals."
+      }
+    },
+    "button": "Start Your Journey"
+  },
+  "emergency": {
+    "title": "Hospitals: Request Blood Units",
+    "description": "Create and manage urgent blood unit requests easily to reach donors quickly.",
+    "createAnnouncementButton": "Create New Blood Request",
+    "viewAnnouncementsButton": "View Blood Requests",
+    "createAnnouncementAlert": "Open form to create a new blood request announcement.",
+    "viewAnnouncementsAlert": "Navigate to the list of current blood requests."
+  },
+  "footer": {
+    "subtitle": "Blood Bank System",
+    "description": "Connecting blood donors with those in need through our comprehensive blood bank management system. Every donation saves lives and strengthens our community.",
+    "quickLinks": {
+      "title": "Quick Links",
+      "about": "About Us",
+      "donate": "Donate Blood",
+      "find": "Find Blood",
+      "events": "Blood Drive Events",
+      "register": "Donor Registration"
+    },
+    "contact": {
+      "title": "Contact Us",
+      "emergency": "Emergency: 911",
+      "general": "General: (555) 123-4567",
+      "email": "info@lifebank.org",
+      "address": "123 Healthcare Ave"
+    },
+    "bottom": {
+      "copyright": "All rights reserved.",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "cookies": "Cookie Policy"
+    }
+  },
+
   "welcome": "Welcome to our site!"
 }

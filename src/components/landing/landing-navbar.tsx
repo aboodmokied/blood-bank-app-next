@@ -54,14 +54,14 @@ export default function LandingNavbar() {
       <div className="flex flex-1 items-center justify-end gap-2 md:w-[25%] text-red-600">
         <LocaleSwitcher />
         <Button variant="ghost" size="sm" asChild>
-          <Link href="/login">{t("login")}</Link>
+          <Link href="#">{t("login")}</Link>
         </Button>
         <Button
           size="sm"
           className="bg-red-600 hover:bg-red-500 text-white"
           asChild
         >
-          <Link href="/signup">{t("signup")}</Link>
+          <Link href="/#">{t("signup")}</Link>
         </Button>
       </div>
     </header>
