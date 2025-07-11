@@ -14,10 +14,32 @@
     "donationButton": "Donate Blood Now",
     "findButton": "Find Blood"
   },
-  "features": {
+  "stats": {
     "emergency-support": "Emergency Support",
     "registered-hospital": "Registered Hospital",
     "active-donors": "Active Donors"
+  },
+  "features": {
+    "title": "Why Choose Our Blood Bank System?",
+    "description": "A powerful and secure platform to efficiently manage donors, hospitals, blood inventory, and operations.",
+
+    "donorMatchingTitle": "Advanced Donor Matching",
+    "donorMatchingDesc": "Quickly find compatible donors based on blood type, location, and donation history.",
+
+    "hospitalIntegrationTitle": "Hospital Integration",
+    "hospitalIntegrationDesc": "Seamlessly connect with hospitals to fulfill blood requests in real time.",
+
+    "inventoryTitle": "Real-time Inventory",
+    "inventoryDesc": "Monitor and analyze blood stock levels across all types and locations in real time.",
+
+    "securityTitle": "Data Security",
+    "securityDesc": "All data is encrypted and protected according to the highest medical security and privacy standards.",
+
+    "reportsTitle": "Analytics & Reporting",
+    "reportsDesc": "Generate accurate reports on donations, inventory, and demand to support decision-making.",
+
+    "appointmentsTitle": "Online Appointments",
+    "appointmentsDesc": "Allow donors to schedule their visits easily and receive reminders to maintain regular donations."
   },
   "welcome": "Welcome to our site!"
 }

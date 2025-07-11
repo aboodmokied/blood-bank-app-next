@@ -1,6 +1,7 @@
-import Features from "@/components/landing/features";
+import Stats from "@/components/landing/stats";
 import Hero from "@/components/landing/hero";
 import LandingNavbar from "@/components/landing/landing-navbar";
+import Features from "@/components/landing/features";
 
 export default function LandingPage() {
   return (
@@ -8,6 +9,7 @@ export default function LandingPage() {
       <LandingNavbar />
       <main className="p-4 container mx-auto">
         <Hero />
+        <Stats />
         <Features />
       </main>
       <footer>Footer</footer>
