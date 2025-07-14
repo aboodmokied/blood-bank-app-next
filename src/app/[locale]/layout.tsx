@@ -6,7 +6,7 @@ import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import Providers from "../providers";
 import { routing } from "@/i18n/routing";
-import { ThemeProvider } from "@/components/theme-provider";
+// import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
@@ -48,15 +48,15 @@ export default async function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <NextIntlClientProvider>
-            <ThemeProvider
+            {/* <ThemeProvider
               attribute="class"
               defaultTheme="system"
               enableSystem
               disableTransitionOnChange
-            >
-              {children}
-              <Toaster position="top-center" />
-            </ThemeProvider>
+            > */}
+            {children}
+            <Toaster position="top-center" />
+            {/* </ThemeProvider> */}
           </NextIntlClientProvider>
         </body>
       </html>
