@@ -93,6 +93,28 @@
       "cookies": "Cookie Policy"
     }
   },
-
+  "login": {
+    "system": "Blood Bank System",
+    "welcome": "Welcome back",
+    "description": "Sign in to access your LifeBank account and continue saving lives",
+    "email": "Email Address",
+    "password": "Password",
+    "forgot": "Forgot password?",
+    "submit": "Sign in to LifeBank",
+    "loading": "Signing in...",
+    "success": "Welcome back to LifeBank",
+    "error": "Invalid credentials. Please try again.",
+    "invalid": "Invalid credentials",
+    "noAccount": "Don't have an account?",
+    "signup": "Sign up to join LifeBank",
+    "footerNote": "By signing in, you agree to help save lives through blood donation.",
+    "role": "Account type"
+  },
+  "roles": {
+    "admin": "Admin",
+    "donor": "Donor",
+    "doctor": "Doctor",
+    "hospital": "Hospital"
+  },
   "welcome": "Welcome to our site!"
 }
