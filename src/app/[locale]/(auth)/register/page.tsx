@@ -4,7 +4,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
-import { Link, useRouter } from "@/i18n/navigation";
+import { useRouter } from "@/i18n/navigation";
 import axios from "axios";
 import { toast } from "sonner";
 
@@ -17,6 +17,8 @@ import {
   User2Icon,
 } from "lucide-react";
 
+import Link from "next/link";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -27,20 +29,26 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-
 import { Separator } from "@/components/ui/separator";
 import { LocaleSwitcher } from "@/components/locale-switcher";
 
-const formSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8),
-  role: z.enum(["donor", "hospital", "doctor", "admin"], {
-    required_error: "Please select a role",
-  }),
-});
+const formSchema = z
+  .object({
+    email: z.string().email(),
+    password: z.string().min(8),
+    confirmPassword: z.string().min(8),
+    name: z.string().max(30),
+    role: z.enum(["donor", "hospital", "doctor", "admin"], {
+      required_error: "Please select a role",
+    }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
 
-export default function LoginPage() {
-  const t = useTranslations("login");
+export default function RegisterPage() {
+  const t = useTranslations("register");
   const tRoles = useTranslations("roles");
   const router = useRouter();
 
@@ -49,44 +57,34 @@ export default function LoginPage() {
     defaultValues: {
       email: "",
       password: "",
+      name: "",
+      confirmPassword: "",
       role: "donor",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const toastId = toast.loading(t("loading"));
+    const toastId = toast.loading(t("submit"));
 
     try {
-      await axios.post("/api/login", values);
+      await axios.post("/api/register", values);
 
       toast.dismiss(toastId);
       toast.success(t("success"));
-      router.push("/dashboard");
+      router.push("/login");
     } catch (error) {
       toast.dismiss(toastId);
       toast.error(t("error"));
-
-      form.setError("email", {
-        type: "manual",
-        message: t("invalid"),
-      });
-      form.setError("password", {
-        type: "manual",
-        message: t("invalid"),
-      });
     }
   }
 
   return (
     <div className="bg-gradient-to-br from-red-50 via-white to-red-50 min-h-screen flex flex-col relative">
-      {/* Language Switcher */}
       <div className="absolute top-4 end-4 z-20">
         <LocaleSwitcher />
       </div>
-
       <main className="flex-grow flex items-center justify-center p-4">
         <div className="w-full max-w-md">
-          {/* Header */}
           <div className="text-center mb-8">
             <Link href="/" className="inline-block mb-6">
               <div className="flex items-center justify-center space-x-3">
@@ -100,12 +98,11 @@ export default function LoginPage() {
               </div>
             </Link>
             <h2 className="text-3xl font-bold text-gray-900 mb-2">
-              {t("welcome")}
+              {t("title")}
             </h2>
             <p className="text-gray-600">{t("description")}</p>
           </div>
 
-          {/* Login Form */}
           <div className="bg-white rounded-xl shadow-lg p-8 border">
             <Form {...form}>
               <form
@@ -118,14 +115,36 @@ export default function LoginPage() {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-gray-900 font-medium">
-                        {t("email")}
-                      </FormLabel>
+                      <FormLabel>{t("email")}</FormLabel>
                       <FormControl>
                         <div className="relative">
                           <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                           <Input
+                            type="email"
                             placeholder="you@example.com"
+                            className="pl-10 h-12"
+                            {...field}
+                          />
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* name */}
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{"username"}</FormLabel>
+                      <FormControl>
+                        <div className="relative">
+                          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                          <Input
+                            type="name"
+                            placeholder="username"
                             className="pl-10 h-12"
                             {...field}
                           />
@@ -142,17 +161,7 @@ export default function LoginPage() {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <div className="flex items-center justify-between">
-                        <FormLabel className="text-gray-900 font-medium">
-                          {t("password")}
-                        </FormLabel>
-                        <Link
-                          href="/forgot-password"
-                          className="text-sm font-medium text-red-600 hover:underline"
-                        >
-                          {t("forgot")}
-                        </Link>
-                      </div>
+                      <FormLabel>{t("password")}</FormLabel>
                       <FormControl>
                         <div className="relative">
                           <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
@@ -169,15 +178,36 @@ export default function LoginPage() {
                   )}
                 />
 
-                {/* Role */}
+                {/* Confirm Password */}
+                <FormField
+                  control={form.control}
+                  name="confirmPassword"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{t("confirmPassword")}</FormLabel>
+                      <FormControl>
+                        <div className="relative">
+                          <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                          <Input
+                            type="password"
+                            placeholder="••••••••"
+                            className="pl-10 h-12"
+                            {...field}
+                          />
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* Role Buttons */}
                 <FormField
                   control={form.control}
                   name="role"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-gray-900 font-medium">
-                        {t("role")}
-                      </FormLabel>
+                      <FormLabel>{t("role")}</FormLabel>
                       <FormControl>
                         <div className="grid grid-cols-2 gap-3">
                           {(
@@ -208,7 +238,6 @@ export default function LoginPage() {
                   )}
                 />
 
-                {/* Submit */}
                 <Button
                   type="submit"
                   className="w-full h-12 bg-red-600 hover:bg-red-700 text-white font-semibold text-lg transition-transform duration-300 transform hover:scale-105 shadow-lg"
@@ -217,7 +246,7 @@ export default function LoginPage() {
                   {form.formState.isSubmitting ? (
                     <>
                       <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                      {t("loading")}
+                      {t("submit")}
                     </>
                   ) : (
                     <>
@@ -232,18 +261,14 @@ export default function LoginPage() {
             <Separator className="my-8" />
 
             <div className="text-center text-sm text-gray-600">
-              {t("noAccount")}{" "}
+              {t("alreadyHaveAccount")}{" "}
               <Link
-                href="/register"
+                href="/login"
                 className="font-medium text-red-600 hover:text-red-700 hover:underline"
               >
-                {t("signup")}
+                {t("login")}
               </Link>
             </div>
-          </div>
-
-          <div className="mt-8 text-center text-sm text-gray-500">
-            {t("footerNote")}
           </div>
         </div>
       </main>

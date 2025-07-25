@@ -116,5 +116,20 @@
     "doctor": "Doctor",
     "hospital": "Hospital"
   },
+  "register": {
+    "system": "Blood Bank System",
+    "title": "Create an account",
+    "description": "Register to start using LifeBank",
+    "email": "Email Address",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "role": "Select Role",
+    "submit": "Create Account",
+    "success": "Account created successfully!",
+    "error": "Registration failed. Please try again.",
+    "passwordMismatch": "Passwords do not match",
+    "alreadyHaveAccount": "Already have an account?",
+    "login": "Sign in to LifeBank"
+  },
   "welcome": "Welcome to our site!"
 }
