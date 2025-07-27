@@ -116,6 +116,16 @@
     "doctor": "Doctor",
     "hospital": "Hospital"
   },
+  "forgotPassword": {
+    "chooseRole": "Select your role",
+    "email": "Email Address",
+    "submit": "Send",
+    "footerNote": "We will send code to your email.",
+    "loading": "Sending...",
+    "success": "Check your email box",
+    "error": "Invalid Email. Please try again.",
+    "invalid": "Invalid email"
+  },
   "register": {
     "system": "Blood Bank System",
     "title": "Create an account",
@@ -130,6 +140,24 @@
     "passwordMismatch": "Passwords do not match",
     "alreadyHaveAccount": "Already have an account?",
     "login": "Sign in to LifeBank"
+  },
+  "resetCode": {
+    "code": "Verification Code",
+    "verify": "Verify",
+    "verifying": "Verifying...",
+    "success": "Code verified. Redirecting...",
+    "error": "Verification failed. Try again.",
+    "invalid": "Invalid code",
+    "footerNote": "Check your email for the verification code we sent."
+  },
+  "resetPassword": {
+    "title": "Set New Password",
+    "new": "New Password",
+    "confirm": "Confirm Password",
+    "submit": "Reset Password",
+    "loading": "Resetting...",
+    "success": "Password has been updated successfully!",
+    "error": "Failed to reset password. Try again."
   },
   "welcome": "Welcome to our site!"
 }

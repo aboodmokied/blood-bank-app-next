@@ -6,7 +6,7 @@ export async function POST(req: Request) {
   const { email, password, name, role } = await req.json();
 
   try {
-    const res = await axios.post("http://localhost:4001/user/register", {
+    const res = await axios.post("http://localhost:5000/user/register", {
       email,
       password,
       name,
