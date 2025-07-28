@@ -5,7 +5,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
-import { useRouter, useParams, notFound } from "next/navigation";
+import { useParams, notFound } from "next/navigation";
 import axios from "axios";
 import { toast } from "sonner";
 
@@ -20,6 +20,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { useRouter } from "@/i18n/navigation";
 
 const schema = z
   .object({
@@ -59,20 +60,26 @@ export default function ResetPasswordPage() {
   async function onSubmit(values: z.infer<typeof schema>) {
     const toastId = toast.loading(t("loading"));
     try {
-      await axios.post("/api/reset-password", {
+      const res = await axios.post("/api/forgot-password/reset-password", {
         email,
         role,
         newPassword: values.password,
       });
 
       toast.dismiss(toastId);
-      toast.success(t("success"));
+      toast.success(res.data?.message || t("success"));
 
       localStorage.removeItem("resetEmail");
       router.push("/login");
-    } catch (error) {
+    } catch (error: any) {
       toast.dismiss(toastId);
-      toast.error(t("error"));
+      toast.error(error.response?.data?.error || t("error"));
+      if (error.status == 400) {
+        form.setError("password", {
+          type: "manual",
+          message: error.response?.data?.error,
+        });
+      }
     }
   }
 

@@ -4,7 +4,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
-import { useRouter, useParams, notFound } from "next/navigation";
+import { useParams, notFound } from "next/navigation";
 import axios from "axios";
 import { toast } from "sonner";
 
@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/form";
 import { ShieldCheck, Loader2, KeyRound } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useRouter } from "@/i18n/navigation";
 
 const formSchema = z.object({
   code: z.string().min(4, "Code must be at least 4 characters"),
@@ -43,23 +44,23 @@ export default function EnterCodePage() {
     const toastId = toast.loading(t("verifying"));
 
     try {
-      await axios.post("/api/verify-code", {
+      const res = await axios.post("/api/forgot-password/verify-code", {
         role,
         code: values.code,
         email,
       });
 
       toast.dismiss(toastId);
-      toast.success(t("success"));
+      toast.success(res?.data?.message || t("success"));
 
       router.push(`/forgot-password/${role}/reset`);
-    } catch (error) {
+    } catch (error: any) {
       toast.dismiss(toastId);
-      toast.error(t("error"));
+      toast.error(error.response?.data?.error || t("error"));
 
       form.setError("code", {
         type: "manual",
-        message: t("invalid"),
+        message: error.response?.data?.error || t("invalid"),
       });
     }
   }

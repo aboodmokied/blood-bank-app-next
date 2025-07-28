@@ -6,7 +6,7 @@ export async function POST(req: Request) {
   const { email, password, role } = await req.json();
 
   try {
-    const res = await axios.post("http://localhost:4001/auth/login", {
+    const res = await axios.post("http://localhost:5000/auth/login", {
       email,
       password,
       role,
