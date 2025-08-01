@@ -23,6 +23,13 @@ export async function POST(req: Request) {
       path: "/",
     });
 
+    cookieStore.set("user", JSON.stringify(user), {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 60 * 60,
+      path: "/",
+    });
+
     return NextResponse.json({ user });
   } catch (error: any) {
     console.error("Login failed:", error?.response?.data || error.message);
