@@ -1,11 +1,10 @@
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
-import axios from "axios";
 import { User } from "@/types/auth.types";
 import { Link } from "@/i18n/navigation";
 import { getUserFromCookies } from "@/lib/auth";
 
 export default async function DashboardPage() {
-  let user: User = await getUserFromCookies();
+  const user: User = await getUserFromCookies();
   if (!user) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-red-50 via-white to-red-50 p-4 text-center">

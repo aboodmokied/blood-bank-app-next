@@ -2,7 +2,6 @@ import {
   Home,
   History,
   User2Icon,
-  LogOut,
   Users,
   ClipboardList,
   ShieldCheck,

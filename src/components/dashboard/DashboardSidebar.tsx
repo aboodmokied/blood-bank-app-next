@@ -1,6 +1,6 @@
 "use client";
 
-import { Heart, Home, History, User2Icon, LogOut, Menu, X } from "lucide-react";
+import { Heart, LogOut, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";

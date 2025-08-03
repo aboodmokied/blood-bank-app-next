@@ -8,14 +8,7 @@ import { Link, useRouter } from "@/i18n/navigation";
 import axios from "axios";
 import { toast } from "sonner";
 
-import {
-  Mail,
-  Lock,
-  Heart,
-  ArrowRight,
-  Loader2,
-  User2Icon,
-} from "lucide-react";
+import { Mail, Lock, Heart, ArrowRight, Loader2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -62,7 +55,7 @@ export default function LoginPage() {
       toast.dismiss(toastId);
       toast.success(t("success"));
       router.push("/dashboard");
-    } catch (error) {
+    } catch (_) {
       toast.dismiss(toastId);
       toast.error(t("error"));
 
