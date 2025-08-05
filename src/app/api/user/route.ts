@@ -11,7 +11,7 @@ export async function GET() {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
   try {
-    const res = await axios.get("http://localhost:4001/auth/me", {
+    const res = await axios.get("http://localhost:5000/auth/me", {
       headers: {
         Authorization: `Bearer ${token}`,
       },

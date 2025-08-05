@@ -6,6 +6,7 @@ import {
   ClipboardList,
   ShieldCheck,
   Hospital,
+  Heart,
 } from "lucide-react";
 
 export const NAV_ITEMS: Record<
@@ -17,9 +18,18 @@ export const NAV_ITEMS: Record<
   }[]
 > = {
   donor: [
-    { label: "Dashboard", icon: Home },
-    { label: "Donation History", icon: History },
-    { label: "Profile", icon: User2Icon },
+    { label: "Dashboard", icon: Home, path: "/dashboard" },
+    {
+      label: "Donation History",
+      icon: History,
+      path: "/dashboard/donation-history",
+    },
+    {
+      label: "Medical History",
+      icon: Heart,
+      path: "/dashboard/medical-history",
+    },
+    { label: "Profile", icon: User2Icon, path: "/dashboard/profile" },
   ],
   hospital: [
     { label: "Dashboard", icon: Home },

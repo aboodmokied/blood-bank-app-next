@@ -8,6 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { User } from "@/types/auth.types";
 import { NAV_ITEMS } from "@/config/sidebar";
+import { Link, usePathname } from "@/i18n/navigation";
 
 type DashboardSidebarProps = {
   user: User;
@@ -17,6 +18,7 @@ export default function DashboardSidebar({ user }: DashboardSidebarProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const router = useRouter();
   const navItems = NAV_ITEMS[user.role];
+  const pathname = usePathname();
   const logout = () => {
     document.cookie = "token=; Max-Age=0";
     router.push("/login");
@@ -71,7 +73,8 @@ export default function DashboardSidebar({ user }: DashboardSidebarProps) {
               key={index}
               icon={item.icon}
               label={item.label}
-              active={index == 0}
+              path={item.path || "/"}
+              active={item.path == pathname}
             />
           ))}
         </nav>
@@ -95,20 +98,24 @@ function NavItem({
   icon: Icon,
   label,
   active = false,
+  path,
 }: {
   icon: React.ElementType;
   label: string;
+  path: string;
   active?: boolean;
 }) {
   return (
-    <button
-      className={cn(
-        "flex items-center w-full px-4 py-2 rounded-lg text-left text-gray-700 hover:bg-red-100 hover:text-red-700 transition-colors",
-        active && "bg-red-500 text-white hover:bg-red-600"
-      )}
-    >
-      <Icon className="mr-3 h-5 w-5" />
-      <span className="text-sm font-medium">{label}</span>
-    </button>
+    <Link href={path}>
+      <button
+        className={cn(
+          "flex items-center w-full px-4 py-2 rounded-lg text-left text-gray-700 hover:bg-red-100 hover:text-red-700 transition-colors",
+          active && "bg-red-500 text-white hover:bg-red-600"
+        )}
+      >
+        <Icon className="mr-3 h-5 w-5" />
+        <span className="text-sm font-medium">{label}</span>
+      </button>
+    </Link>
   );
 }
