@@ -11,26 +11,41 @@ export async function POST(req: Request) {
       password,
       role,
     });
-    console.log({
-      res: res.data,
-    });
     const { token, user } = res.data;
-    const cookieStore = await cookies();
-    cookieStore.set("token", token, {
+    const response = NextResponse.json({ user });
+
+    // attach cookies to response
+    response.cookies.set("token", token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       maxAge: 60 * 60,
       path: "/",
     });
 
-    cookieStore.set("user", JSON.stringify(user), {
+    response.cookies.set("user", JSON.stringify(user), {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       maxAge: 60 * 60,
       path: "/",
     });
 
-    return NextResponse.json({ user });
+    return response;
+    // const cookieStore = await cookies();
+    // cookieStore.set("token", token, {
+    //   httpOnly: true,
+    //   secure: process.env.NODE_ENV === "production",
+    //   maxAge: 60 * 60,
+    //   path: "/",
+    // });
+
+    // cookieStore.set("user", JSON.stringify(user), {
+    //   httpOnly: true,
+    //   secure: process.env.NODE_ENV === "production",
+    //   maxAge: 60 * 60,
+    //   path: "/",
+    // });
+
+    // return NextResponse.json({ user });
   } catch (error: any) {
     console.error("Login failed:", error?.response?.data || error.message);
 

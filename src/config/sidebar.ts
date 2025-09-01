@@ -7,6 +7,7 @@ import {
   ShieldCheck,
   Hospital,
   Heart,
+  Calendar,
 } from "lucide-react";
 
 export const NAV_ITEMS: Record<
@@ -19,6 +20,11 @@ export const NAV_ITEMS: Record<
 > = {
   donor: [
     { label: "Dashboard", icon: Home, path: "/dashboard" },
+    {
+      label: "Appointments",
+      icon: Calendar,
+      path: "/dashboard/appoinments",
+    },
     {
       label: "Donation History",
       icon: History,

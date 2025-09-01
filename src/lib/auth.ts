@@ -1,6 +1,9 @@
+// server components only
 import { User } from "@/types/auth.types";
 import axios, { AxiosInstance } from "axios";
 import jwt from "jsonwebtoken";
+import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
+import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { cookies } from "next/headers";
 
 export async function getUserFromToken() {
@@ -15,16 +18,18 @@ export async function getUserFromToken() {
   }
 }
 
-export async function getUserFromCookies() {
+export async function getUserFromCookies(): Promise<User | null> {
   const cookieStore = await cookies();
   const user = cookieStore.get("user")?.value;
   if (!user) return null;
   return JSON.parse(user);
 }
 
+// get the token from cookies used only in server side
 export async function getAuthorizedAxios() {
-  const cookieStore = await cookies();
-  const token = cookieStore.get("token")?.value;
+  const store = await cookies();
+  const token = store.get("token")?.value;
+  console.log({ cookieToken: store.get("token") });
   if (!token) {
     throw new Error("Unauthorized");
   }
@@ -37,22 +42,8 @@ export async function getAuthorizedAxios() {
   });
 }
 
-// function handleAxiosError(error: unknown) {
-//   console.log({ error });
-//   if (axios.isAxiosError(error)) {
-//     const status = error.response?.status;
-
-//     if (status === 401) throw new Error("Unauthorized");
-//     if (status === 403) throw new Error("Forbidden");
-//     if (status === 404) throw new Error("Not Found");
-
-//     throw new Error(error.response?.data?.message || "Request failed");
-//   }
-
-//   throw new Error("Unexpected error");
-// }
-
 function handleAxiosError(error: unknown): never {
+  console.error(error);
   if (axios.isAxiosError(error)) {
     const status = error.response?.status;
     if (status === 401) throw new Error("Unauthorized");
@@ -63,6 +54,7 @@ function handleAxiosError(error: unknown): never {
   throw new Error("Unexpected error");
 }
 
+// for external endpoints calls
 export async function axiosRequest<T>(
   axiosInstance: AxiosInstance,
   config: Parameters<AxiosInstance["request"]>[0]

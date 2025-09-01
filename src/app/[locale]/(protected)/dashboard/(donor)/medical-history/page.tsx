@@ -2,23 +2,6 @@ import { axiosRequest, getAuthorizedAxios } from "@/lib/auth";
 import { MedicalHistory } from "@/types/dashboard.types";
 
 export default async function MedicalHistoryPage() {
-  // const medicalRecords: MedicalHistory[] = [
-  //   {
-  //     id: 1,
-  //     condition: "Hypertension",
-  //     diagnosedAt: "2018-03-21",
-  //     notes: "Under control with medication.",
-  //     donorId: 1,
-  //   },
-  //   {
-  //     id: 2,
-  //     condition: "Anemia",
-  //     diagnosedAt: "2020-11-10",
-  //     notes: "Currently being monitored.",
-  //     donorId: 1,
-  //   },
-  // ];
-
   const authAxios = await getAuthorizedAxios();
   const { medicalHistory: medicalRecords } = await axiosRequest<{
     medicalHistory: MedicalHistory[];

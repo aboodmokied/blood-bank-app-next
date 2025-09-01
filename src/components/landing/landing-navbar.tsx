@@ -34,7 +34,7 @@ export default function LandingNavbar() {
       </div>
 
       {/* Desktop Nav */}
-      <nav className="hidden md:flex items-center space-x-8 grow-1 justify-center">
+      {/* <nav className="hidden md:flex items-center space-x-8 grow-1 justify-center">
         {navLinks.map((item) => (
           <div key={item.name} className="relative group">
             <a
@@ -49,19 +49,19 @@ export default function LandingNavbar() {
             </a>
           </div>
         ))}
-      </nav>
+      </nav> */}
       {/* Right side items - using logical properties */}
       <div className="flex flex-1 items-center justify-end gap-2 md:w-[25%] text-red-600">
         <LocaleSwitcher />
         <Button variant="ghost" size="sm" asChild>
-          <Link href="#">{t("login")}</Link>
+          <Link href="/login">{t("login")}</Link>
         </Button>
         <Button
           size="sm"
           className="bg-red-600 hover:bg-red-500 text-white"
           asChild
         >
-          <Link href="/#">{t("signup")}</Link>
+          <Link href="/register">{t("signup")}</Link>
         </Button>
       </div>
     </header>
