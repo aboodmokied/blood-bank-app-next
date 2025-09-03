@@ -32,8 +32,10 @@ export default function AppointmentForm() {
   useEffect(() => {
     const fetchHospitals = async () => {
       try {
-        const res = await axios.get(`/api/hospital`, { params: { search } });
-        setHospitals(res.data);
+        const res = await axios.get(`/api/user/hospital`, {
+          params: { search },
+        });
+        setHospitals(res.data.users);
       } catch (error) {
         console.error("Error fetching hospitals:", error);
       }

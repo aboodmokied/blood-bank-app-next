@@ -23,7 +23,7 @@ export const NAV_ITEMS: Record<
     {
       label: "Appointments",
       icon: Calendar,
-      path: "/dashboard/appoinments",
+      path: "/dashboard/appointments",
     },
     {
       label: "Donation History",
