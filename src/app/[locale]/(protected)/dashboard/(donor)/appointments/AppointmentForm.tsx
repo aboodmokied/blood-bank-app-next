@@ -34,6 +34,7 @@ export default function AppointmentForm() {
       try {
         const res = await axios.get(`/api/user/hospital`, {
           params: { search },
+          withCredentials: true,
         });
         setHospitals(res.data.users);
       } catch (error) {

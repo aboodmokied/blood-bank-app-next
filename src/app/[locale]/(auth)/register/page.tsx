@@ -58,7 +58,7 @@ export default function RegisterPage() {
     const toastId = toast.loading(t("submit"));
 
     try {
-      await axios.post("/api/register", values);
+      await axios.post("http://localhost:5000/user/register", values);
 
       toast.dismiss(toastId);
       toast.success(t("success"));

@@ -23,25 +23,3 @@ export async function PATCH(req: Request) {
     );
   }
 }
-export async function GET() {
-  try {
-    const authAxios = await getAuthorizedAxios();
-    const user = await getUserFromCookies();
-    if (!user) {
-      throw new Error("Unauthorized");
-    }
-    const { id, role } = user;
-    const res = await authAxios.get(
-      `http://localhost:5000/profile/${role}/${id}`
-    );
-    const { profile } = res.data;
-    return NextResponse.json({ profile });
-  } catch (error: any) {
-    const message = error?.response?.data || error.message;
-    console.error("Request failed:", message);
-    return NextResponse.json(
-      { error: message || "Something Went Wrong" },
-      { status: error?.response?.data || 500 }
-    );
-  }
-}
