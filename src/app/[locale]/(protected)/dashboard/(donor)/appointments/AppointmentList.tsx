@@ -1,16 +1,10 @@
-// app/appointments/AppointmentList.tsx
 "use client";
 
 import { useState } from "react";
 import axios from "axios";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectTrigger,
-  SelectContent,
-  SelectItem,
-} from "@/components/ui/select";
+
 import {
   Pagination,
   PaginationContent,
@@ -28,22 +22,24 @@ interface Appointment {
 
 interface Props {
   initialData: {
-    data: Appointment[];
-    totalPages: number;
+    appointments: any;
+    pagination: { page: number; limit: number; totalPages: number };
   };
 }
 
 export default function AppointmentList({ initialData }: Props) {
-  const [appointments, setAppointments] = useState(initialData.data);
+  const [appointments, setAppointments] = useState(
+    initialData?.appointments || []
+  );
   const [page, setPage] = useState(1);
-  const [totalPages] = useState(initialData.totalPages);
+  const [totalPages] = useState(initialData?.pagination?.totalPages || 0);
 
   const fetchAppointments = async (page: number) => {
     try {
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/appointments?page=${page}&limit=5`
-      );
-      setAppointments(res.data.data);
+      const res = await axios.get(`/api/appointments?page=${page}&limit=10`, {
+        withCredentials: true,
+      });
+      setAppointments(res.data.appointments);
       setPage(page);
     } catch (error) {
       console.error("Error fetching appointments:", error);
@@ -52,32 +48,29 @@ export default function AppointmentList({ initialData }: Props) {
 
   const handleStatusChange = async (id: number, status: string) => {
     try {
-      await axios.patch(
-        `${process.env.NEXT_PUBLIC_API_URL}/appointments/${id}/status`,
-        { status }
-      );
+      await axios.patch(`/api/appointments`, { status, id });
       fetchAppointments(page);
     } catch (error) {
       console.error("Error updating status:", error);
     }
   };
 
-  const handleDelete = async (id: number) => {
-    try {
-      await axios.delete(
-        `${process.env.NEXT_PUBLIC_API_URL}/appointments/${id}`
-      );
-      fetchAppointments(page);
-    } catch (error) {
-      console.error("Error deleting:", error);
-    }
-  };
+  // const handleDelete = async (id: number) => {
+  //   try {
+  //     await axios.delete(
+  //       `${process.env.NEXT_PUBLIC_API_URL}/appointments/${id}`
+  //     );
+  //     fetchAppointments(page);
+  //   } catch (error) {
+  //     console.error("Error deleting:", error);
+  //   }
+  // };
 
   return (
     <Card className="p-4 shadow-md">
       <h2 className="text-lg font-semibold mb-3">Appointments</h2>
       <div className="grid gap-3">
-        {appointments.map((appt) => (
+        {appointments.map((appt: any) => (
           <CardContent
             key={appt.id}
             className="flex justify-between items-center border p-3 rounded-lg shadow-sm"
@@ -110,7 +103,7 @@ export default function AppointmentList({ initialData }: Props) {
                 appt.status.toLocaleLowerCase() == "confirmed") && (
                 <Button
                   variant="destructive"
-                  onClick={() => handleDelete(appt.id)}
+                  onClick={() => handleStatusChange(appt.id, "cancelled")}
                 >
                   Cancel
                 </Button>

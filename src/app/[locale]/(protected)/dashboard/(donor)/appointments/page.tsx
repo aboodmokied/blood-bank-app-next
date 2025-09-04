@@ -1,3 +1,8 @@
+import {
+  axiosRequest,
+  getAuthorizedAxios,
+  getUserFromCookies,
+} from "@/lib/auth";
 import AppointmentForm from "./AppointmentForm";
 import AppointmentList from "./AppointmentList";
 
@@ -51,12 +56,22 @@ async function getAppointments(page: number = 1, limit: number = 5) {
 }
 
 export default async function AppointmentPage() {
-  const data = await getAppointments(1, 5);
-
+  const authAxios = await getAuthorizedAxios();
+  const user = await getUserFromCookies();
+  if (!user) throw new Error("User not found");
+  const res = await axiosRequest<{
+    appointments: any;
+    pagination: { page: number; limit: number; totalPages: number };
+  }>(authAxios, {
+    method: "GET",
+    withCredentials: true,
+    url: `http://localhost:5000/appointments/donor/${user.id}`,
+  });
+  const { appointments, pagination } = res;
   return (
     <div className="p-6 grid gap-6">
       <AppointmentForm />
-      <AppointmentList initialData={data} />
+      <AppointmentList initialData={{ appointments, pagination }} />
     </div>
   );
 }

@@ -20,7 +20,7 @@ interface Hospital {
 }
 
 export default function AppointmentForm() {
-  const [donorId, setDonorId] = useState("");
+  // const [donorId, setDonorId] = useState("");
   const [hospitals, setHospitals] = useState<Hospital[]>([]);
   const [selectedHospital, setSelectedHospital] = useState<Hospital | null>(
     null
@@ -56,13 +56,20 @@ export default function AppointmentForm() {
         alert("Please select a hospital");
         return;
       }
-      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/appointments`, {
-        donorId: Number(donorId),
-        hospitalId: selectedHospital.id,
-        date,
-      });
+      await axios.post(
+        `/api/appointments`,
+        {
+          // donorId: Number(donorId),
+          hospitalId: selectedHospital.id,
+          date,
+          status: "pending",
+        },
+        {
+          withCredentials: true,
+        }
+      );
 
-      setDonorId("");
+      // setDonorId("");
       setSelectedHospital(null);
       setDate("");
       window.location.reload(); // temporary refresh
