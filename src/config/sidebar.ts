@@ -8,6 +8,7 @@ import {
   Hospital,
   Heart,
   Calendar,
+  Droplet,
 } from "lucide-react";
 
 export const NAV_ITEMS: Record<
@@ -38,14 +39,17 @@ export const NAV_ITEMS: Record<
     { label: "Profile", icon: User2Icon, path: "/dashboard/profile" },
   ],
   hospital: [
-    { label: "Dashboard", icon: Home },
-    { label: "Appointments", icon: ClipboardList },
-    { label: "Donors", icon: Users },
+    { label: "Dashboard", icon: Home, path: "/dashboard" },
+    { label: "Blood Stock", icon: Droplet, path: "/dashboard/stock" },
+    { label: "Appointments", icon: ClipboardList, path: "/dashboard/appointments" },
+    { label: "Donors", icon: Users, path: "/dashboard/donors" },
   ],
   doctor: [
-    { label: "Dashboard", icon: Home },
-    { label: "Patients", icon: Users },
-    { label: "Reports", icon: ClipboardList },
+    { label: "Dashboard", icon: Home, path: "/dashboard" },
+    { label: "Today's Appointments", icon: Calendar, path: "/dashboard/appointments/today" },
+    { label: "Add Donation", icon: Droplet, path: "/dashboard/donations/add" },
+    { label: "Patients", icon: Users, path: "/dashboard/patients" },
+    { label: "Reports", icon: ClipboardList, path: "/dashboard/reports" },
   ],
   admin: [
     { label: "Dashboard", icon: Home },
