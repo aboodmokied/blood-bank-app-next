@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
-import axios from "axios";
+import { signIn } from "next-auth/react";
 import { toast } from "sonner";
 
 import { Mail, Lock, Heart, ArrowRight, Loader2 } from "lucide-react";
@@ -50,14 +50,21 @@ export default function LoginPage() {
     const toastId = toast.loading(t("loading"));
 
     try {
-      await axios.post("/api/login", values);
+      const res = await signIn("credentials", {
+        ...values,
+        redirect: false,
+      });
+
+      if (res?.error) {
+        throw new Error(res.error);
+      }
 
       toast.dismiss(toastId);
       toast.success(t("success"));
       router.push("/dashboard");
-    } catch (_) {
+    } catch (error: any) {
       toast.dismiss(toastId);
-      toast.error(t("error"));
+      toast.error(error.message || t("error"));
 
       form.setError("email", {
         type: "manual",
