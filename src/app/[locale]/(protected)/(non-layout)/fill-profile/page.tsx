@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import axios from "axios";
 import { toast } from "sonner";
+import { handleApiError, setFormErrors } from "@/lib/api-error";
 
 import { User, MapPin, Calendar, Droplet, Loader2, Pencil } from "lucide-react";
 
@@ -52,11 +53,13 @@ export default function FillProfilePage() {
     try {
       await axios.post("/api/profile", values);
       toast.dismiss(toastId);
-      toast.success("success");
+      toast.success("Profile updated successfully");
       router.push("/dashboard");
-    } catch (_) {
+    } catch (error: any) {
       toast.dismiss(toastId);
-      toast.error("error");
+      const { message, errors } = handleApiError(error);
+      toast.error(message || "Failed to update profile");
+      setFormErrors(errors, form.setError);
     }
   }
 

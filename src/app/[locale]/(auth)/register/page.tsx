@@ -12,6 +12,7 @@ import { Mail, Lock, Heart, ArrowRight, Loader2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { handleApiError, setFormErrors } from "@/lib/api-error";
 import {
   Form,
   FormControl,
@@ -58,14 +59,16 @@ export default function RegisterPage() {
     const toastId = toast.loading(t("submit"));
 
     try {
-      await axios.post("http://localhost:5000/user/register", values);
+      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user/register`, values);
 
       toast.dismiss(toastId);
       toast.success(t("success"));
       router.push("/login");
-    } catch (_) {
+    } catch (error: any) {
       toast.dismiss(toastId);
-      toast.error(t("error"));
+      const { message, errors } = handleApiError(error);
+      toast.error(message || t("error"));
+      setFormErrors(errors, form.setError);
     }
   }
 

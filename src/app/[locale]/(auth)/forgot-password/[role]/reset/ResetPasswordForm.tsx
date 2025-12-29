@@ -8,6 +8,7 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import axios from "axios";
 import { toast } from "sonner";
+import { handleApiError, setFormErrors } from "@/lib/api-error";
 
 import { Lock, CheckCircle, Loader2 } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -70,12 +71,17 @@ export default function ResetPasswordForm({ role }: { role: string }) {
       router.push("/login");
     } catch (error: any) {
       toast.dismiss(toastId);
-      toast.error(error.response?.data?.error || t("error"));
-      if (error.status == 400) {
-        form.setError("password", {
-          type: "manual",
-          message: error.response?.data?.error,
-        });
+      const { message, errors } = handleApiError(error);
+      toast.error(message || t("error"));
+      
+      if (errors) {
+        setFormErrors(errors, form.setError);
+      } else if (error.response?.status === 400) {
+         // Fallback for current behaviour if backend doesn't send structured errors
+         form.setError("password", {
+           type: "manual",
+           message: message,
+         });
       }
     }
   }

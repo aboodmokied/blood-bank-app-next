@@ -12,6 +12,7 @@ import { Mail, Lock, Heart, ArrowRight, Loader2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { handleApiError } from "@/lib/api-error";
 import {
   Form,
   FormControl,
@@ -64,16 +65,19 @@ export default function LoginPage() {
       router.push("/dashboard");
     } catch (error: any) {
       toast.dismiss(toastId);
-      toast.error(error.message || t("error"));
+      const { message } = handleApiError(error);
+      toast.error(message || t("error"));
 
-      form.setError("email", {
-        type: "manual",
-        message: t("invalid"),
-      });
-      form.setError("password", {
-        type: "manual",
-        message: t("invalid"),
-      });
+      if (message.includes("Credential") || message.includes("Invalid")) {
+         form.setError("email", {
+           type: "manual",
+           message: t("invalid"),
+         });
+         form.setError("password", {
+           type: "manual",
+           message: t("invalid"),
+         });
+      }
     }
   }
 

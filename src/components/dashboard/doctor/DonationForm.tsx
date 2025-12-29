@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/select";
 import { toast } from "sonner";
 import { getAuthorizedAxios } from "@/lib/axios-auth";
+import { handleApiError } from "@/lib/api-error";
 
 const formSchema = z.object({
   donorId: z.coerce.number().min(1, "Donor ID is required"),
@@ -74,8 +75,14 @@ export default function DonationForm({
       form.reset();
       router.refresh();
     } catch (error: any) {
-      console.error(error);
-      toast.error(error.response?.data?.message || "Failed to record donation");
+      const { message, errors } = handleApiError(error);
+      toast.error(message || "Failed to record donation");
+      // If backend sends structured errors for fields
+      if (errors) {
+        Object.entries(errors).forEach(([key, value]) => {
+           form.setError(key as any, { type: "manual", message: value as string });
+        });
+      }
     } finally {
       setLoading(false);
     }

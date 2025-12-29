@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import axios from "axios";
 import { toast } from "sonner";
+import { handleApiError } from "@/lib/api-error";
 
 import { Mail, ArrowRight, Loader2 } from "lucide-react";
 
@@ -55,11 +56,13 @@ export default function EnterEmailForm({ role }: EnterEmailFormProps) {
       router.push(`/forgot-password/${role}/code`);
     } catch (error: any) {
       toast.dismiss(toastId);
-      toast.error(error.response?.data?.error || t("error"));
-      if (error.status == 404) {
+      const { message } = handleApiError(error);
+      toast.error(message || t("error"));
+      
+      if (error.response?.status === 404) {
         form.setError("email", {
           type: "manual",
-          message: error.response?.data?.error || t("invalid"),
+          message: message || t("invalid"),
         });
       }
     }
