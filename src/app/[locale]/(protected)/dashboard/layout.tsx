@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
-import { getUserFromCookies } from "@/lib/auth";
+import { auth } from "@/auth";
 import { Link } from "@/i18n/navigation";
 
 export default async function DashboardLayout({
@@ -8,7 +8,8 @@ export default async function DashboardLayout({
 }: {
   children: ReactNode;
 }) {
-  const user = await getUserFromCookies();
+  const session = await auth();
+  const user = session?.user;
 
   if (!user) {
     return (

@@ -2,7 +2,7 @@
 
 import { Heart, LogOut, Menu, X } from "lucide-react";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
@@ -16,12 +16,11 @@ type DashboardSidebarProps = {
 
 export default function DashboardSidebar({ user }: DashboardSidebarProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const router = useRouter();
+
   const navItems = NAV_ITEMS[user.role];
   const pathname = usePathname();
   const logout = () => {
-    document.cookie = "token=; Max-Age=0";
-    router.push("/login");
+    signOut({ callbackUrl: "/login" });
   };
 
   return (

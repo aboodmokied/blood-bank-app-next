@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getUserFromToken } from "@/lib/auth";
+import { auth } from "@/auth";
 import { redirect } from "@/i18n/navigation";
 
 export const metadata: Metadata = {
@@ -15,7 +15,8 @@ export default async function ProtectedLayout({
   params: Promise<{ locale: string }>;
 }>) {
   const { locale } = await params;
-  const user = await getUserFromToken();
+  const session = await auth();
+  const user = session?.user;
   console.log({ user });
   if (!user) {
     redirect({ href: "/login", locale });

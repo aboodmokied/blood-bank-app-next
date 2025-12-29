@@ -1,11 +1,8 @@
 import { cookies } from "next/headers";
 import axios from "axios";
 import ProfileCard from "./ProfileCard";
-import {
-  axiosRequest,
-  getAuthorizedAxios,
-  getUserFromCookies,
-} from "@/lib/auth";
+import { getAuthorizedAxios } from "@/lib/axios-auth";
+import { auth } from "@/auth";
 
 export default async function ProfilePage() {
   const baseURL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
@@ -18,19 +15,20 @@ export default async function ProfilePage() {
   //   },
   // });
   const authAxios = await getAuthorizedAxios();
-  const user = await getUserFromCookies();
+  const session = await auth();
+  const user = session?.user;
+
   if (!user) {
     throw new Error("Unauthorized");
   }
   const { id, role } = user;
-  const res = await axiosRequest<{
-    profile: any;
-  }>(authAxios, {
-    method: "GET",
-    url: `http://localhost:5000/profile/${role}/${id}`,
-  });
-
-  const { profile } = res;
+  
+  try {
+     const res = await authAxios.get(`http://localhost:5000/profile/${role}/${id}`);
+     var { profile } = res.data;
+  } catch (error: any) {
+    console.error(error);
+  }
 
   return (
     <div className="p-6 flex flex-col gap-6 max-w-5xl mx-auto">

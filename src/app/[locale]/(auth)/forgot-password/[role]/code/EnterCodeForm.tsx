@@ -8,6 +8,7 @@ import { useTranslations } from "next-intl";
 import { notFound } from "next/navigation";
 import axios from "axios";
 import { toast } from "sonner";
+import { handleApiError } from "@/lib/api-error";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -63,11 +64,12 @@ export default function EnterCodeClient({ role }: { role: string }) {
       router.push(`/forgot-password/${role}/reset`);
     } catch (error: any) {
       toast.dismiss(toastId);
-      toast.error(error.response?.data?.error || t("error"));
+      const { message } = handleApiError(error);
+      toast.error(message || t("error"));
 
       form.setError("code", {
         type: "manual",
-        message: error.response?.data?.error || t("invalid"),
+        message: message || t("invalid"),
       });
     }
   }
