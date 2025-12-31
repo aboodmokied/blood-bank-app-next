@@ -24,8 +24,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
-import { getAuthorizedAxios } from "@/lib/axios-auth";
 import { handleApiError } from "@/lib/api-error";
+import axios from "axios";
 
 const formSchema = z.object({
   donorId: z.coerce.number().min(1, "Donor ID is required"),
@@ -43,10 +43,12 @@ type DonationDefaults = {
 
 export default function DonationForm({ 
   doctorId, 
-  defaults 
+  defaults,
+  accessToken
 }: { 
   doctorId: number;
   defaults?: DonationDefaults;
+  accessToken: string;
 }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -62,13 +64,17 @@ export default function DonationForm({
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+    async function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
     try {
-      const authAxios = await getAuthorizedAxios();
-      await authAxios.post(`${process.env.NEXT_PUBLIC_API_URL}/donations`, {
+      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/donations`, {
         ...values,
-        doctorId,
+        doctorId: Number(doctorId),
+        appointmentId: defaults?.appointmentId ? Number(defaults.appointmentId) : undefined,
+      }, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
       });
 
       toast.success("Donation recorded successfully");

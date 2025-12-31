@@ -47,7 +47,7 @@ export const NAV_ITEMS: Record<
   doctor: [
     { label: "Dashboard", icon: Home, path: "/dashboard" },
     { label: "Today's Appointments", icon: Calendar, path: "/dashboard/appointments/today" },
-    { label: "Add Donation", icon: Droplet, path: "/dashboard/donations/add" },
+
     { label: "Patients", icon: Users, path: "/dashboard/patients" },
     { label: "Reports", icon: ClipboardList, path: "/dashboard/reports" },
   ],

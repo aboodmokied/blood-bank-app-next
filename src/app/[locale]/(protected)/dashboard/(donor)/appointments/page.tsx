@@ -23,7 +23,7 @@ export default async function AppointmentPage() {
   }
   return (
     <div className="p-6 grid gap-6">
-      <AppointmentForm />
+      <AppointmentForm donorId={user.id} />
       <AppointmentList initialData={{ appointments, pagination }} />
     </div>
   );

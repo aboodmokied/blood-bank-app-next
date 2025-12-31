@@ -4,6 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { format } from "date-fns";
 
 import {
   Pagination,
@@ -80,7 +81,7 @@ export default function AppointmentList({ initialData }: Props) {
                 <strong>ID:</strong> {appt.id}
               </p>
               <p>
-                <strong>Date:</strong> {new Date(appt.date).toLocaleString()}
+                <strong>Date:</strong> {format(new Date(appt.date), "Pp")}
               </p>
               <p>
                 <strong>Status:</strong> {appt.status}

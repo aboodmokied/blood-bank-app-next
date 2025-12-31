@@ -13,10 +13,17 @@ import {
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
+import SearchInput from "@/components/dashboard/SearchInput";
 
-export default async function TodayAppointmentsPage() {
+export default async function TodayAppointmentsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
   const session = await auth();
   const user = session?.user;
+  const params = await searchParams;
+  const search = (params?.search as string) || "";
 
   if (!user || user.role !== "doctor") {
     return <div>Access Denied</div>;
@@ -27,7 +34,9 @@ export default async function TodayAppointmentsPage() {
   let appointments = [];
 
   try {
-    const res = await authAxios.get(`${process.env.NEXT_PUBLIC_API_URL}/appointments/day/${today}`);
+    const res = await authAxios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/appointments/day/${today}?search=${search}`
+    );
     appointments = res.data?.appointments || [];
   } catch (error) {
     console.error("Failed to fetch appointments", error);
@@ -37,6 +46,9 @@ export default async function TodayAppointmentsPage() {
     <div className="flex-1 space-y-4 p-8 pt-6">
       <div className="flex items-center justify-between space-y-2">
         <h2 className="text-3xl font-bold tracking-tight">Today's Appointments ({today})</h2>
+      </div>
+      <div className="md:w-1/3">
+        <SearchInput placeholder="Search donor name..." />
       </div>
 
       <div className="rounded-md border">

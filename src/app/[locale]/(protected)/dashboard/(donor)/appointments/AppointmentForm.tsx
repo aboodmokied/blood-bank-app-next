@@ -19,7 +19,7 @@ interface Hospital {
   name: string;
 }
 
-export default function AppointmentForm() {
+export default function AppointmentForm({ donorId }: { donorId: number }) {
   // const [donorId, setDonorId] = useState("");
   const [hospitals, setHospitals] = useState<Hospital[]>([]);
   const [selectedHospital, setSelectedHospital] = useState<Hospital | null>(
@@ -32,10 +32,11 @@ export default function AppointmentForm() {
   useEffect(() => {
     const fetchHospitals = async () => {
       try {
-        const res = await axios.get(`/api/user/hospital`, {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user/hospitals`, {
           params: { search },
           withCredentials: true,
         });
+        console.log({res})
         setHospitals(res.data.users);
       } catch (error) {
         console.error("Error fetching hospitals:", error);
@@ -57,9 +58,9 @@ export default function AppointmentForm() {
         return;
       }
       await axios.post(
-        `/api/appointments`,
+        `${process.env.NEXT_PUBLIC_API_URL}/appointments`,
         {
-          // donorId: Number(donorId),
+          donorId: Number(donorId),
           hospitalId: selectedHospital.id,
           date,
           status: "pending",
