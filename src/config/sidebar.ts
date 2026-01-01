@@ -50,6 +50,7 @@ export const NAV_ITEMS: Record<
 
     { label: "Patients", icon: Users, path: "/dashboard/patients" },
     { label: "Reports", icon: ClipboardList, path: "/dashboard/reports" },
+    { label: "Medical Tests", icon: ClipboardList, path: "/dashboard/tests" },
   ],
   admin: [
     { label: "Dashboard", icon: Home },
