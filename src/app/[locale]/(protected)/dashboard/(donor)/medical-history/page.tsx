@@ -1,14 +1,13 @@
-import { axiosRequest, getAuthorizedAxios } from "@/lib/auth";
+// import { axiosRequest, getAuthorizedAxios } from "@/lib/auth";
+import { auth } from "@/auth";
+import { getAuthorizedAxios } from "@/lib/axios-auth";
 import { MedicalHistory } from "@/types/dashboard.types";
 
 export default async function MedicalHistoryPage() {
   const authAxios = await getAuthorizedAxios();
-  const { medicalHistory: medicalRecords } = await axiosRequest<{
-    medicalHistory: MedicalHistory[];
-  }>(authAxios, {
-    url: `http://localhost:5000/medical-history/1`,
-    method: "GET",
-  });
+  const session = await auth();
+    const user = session?.user;
+  const { data } = await authAxios.get(`http://localhost:5000/medical-history/${user?.id}`);
 
   return (
     <>
@@ -17,13 +16,13 @@ export default async function MedicalHistoryPage() {
         A list of your recorded medical conditions and notes.
       </p>
 
-      {medicalRecords?.length === 0 ? (
+      {data.medicalHistories?.length === 0 ? (
         <div className="text-center text-gray-500 mt-10">
           No medical records found.
         </div>
       ) : (
         <section className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-          {medicalRecords?.map((record) => (
+          {data.medicalHistories?.map((record: MedicalHistory) => (
             <DashboardCard key={record.id} title={record.condition}>
               <p className="text-sm text-gray-500 mb-1">
                 Diagnosed on:{" "}
