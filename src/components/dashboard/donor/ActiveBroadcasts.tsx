@@ -87,7 +87,7 @@ export default function ActiveBroadcasts({ broadcasts, donorBloodType }: ActiveB
                 </Alert>
               )}
 
-              <Link href="/dashboard/appointments">
+              <Link href={`/dashboard/appointments?hospitalId=${broadcast.hospitalId}`}>
                 <Button 
                   className="w-full" 
                   variant={isMatch ? "default" : "outline"}

@@ -19,7 +19,12 @@ interface Hospital {
   name: string;
 }
 
-export default function AppointmentForm({ donorId }: { donorId: number }) {
+interface AppointmentFormProps {
+  donorId: number;
+  preselectedHospitalId?: number;
+}
+
+export default function AppointmentForm({ donorId, preselectedHospitalId }: AppointmentFormProps) {
   // const [donorId, setDonorId] = useState("");
   const [hospitals, setHospitals] = useState<Hospital[]>([]);
   const [selectedHospital, setSelectedHospital] = useState<Hospital | null>(
@@ -27,6 +32,27 @@ export default function AppointmentForm({ donorId }: { donorId: number }) {
   );
   const [date, setDate] = useState("");
   const [search, setSearch] = useState("");
+
+  // Fetch and set preselected hospital
+  useEffect(() => {
+    const fetchPreselectedHospital = async () => {
+      if (!preselectedHospitalId) return;
+      
+      try {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user/hospitals/${preselectedHospitalId}`, {
+          withCredentials: true,
+        });
+        if (res.data) {
+          setSelectedHospital(res.data);
+          setSearch(res.data.name);
+        }
+      } catch (error) {
+        console.error("Error fetching preselected hospital:", error);
+      }
+    };
+
+    fetchPreselectedHospital();
+  }, [preselectedHospitalId]);
 
   // Fetch hospitals whenever search changes
   useEffect(() => {
