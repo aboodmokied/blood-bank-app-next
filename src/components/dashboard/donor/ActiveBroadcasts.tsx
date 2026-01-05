@@ -40,8 +40,8 @@ export default function ActiveBroadcasts({ broadcasts, donorBloodType }: ActiveB
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       {broadcasts.map((broadcast, index) => {
-        // const isMatch = donorBloodType === broadcast.bloodType;
-        const isMatch = true;
+        const isMatch = 'A+' === broadcast.bloodType;
+        // const isMatch = true;
         
         return (
           <Card 

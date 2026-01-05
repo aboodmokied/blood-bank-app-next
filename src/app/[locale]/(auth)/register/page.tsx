@@ -8,7 +8,7 @@ import { Link, useRouter } from "@/i18n/navigation";
 import axios from "axios";
 import { toast } from "sonner";
 
-import { Mail, Lock, Heart, ArrowRight, Loader2 } from "lucide-react";
+import { Mail, Lock, Heart, ArrowRight, Loader2, User } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -135,7 +135,7 @@ export default function RegisterPage() {
                       <FormLabel>{"username"}</FormLabel>
                       <FormControl>
                         <div className="relative">
-                          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+                          <User className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                           <Input
                             type="name"
                             placeholder="username"
