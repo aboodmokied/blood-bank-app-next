@@ -8,7 +8,7 @@ import { Link, useRouter } from "@/i18n/navigation";
 import axios from "axios";
 import { toast } from "sonner";
 
-import { Mail, Lock, Heart, ArrowRight, Loader2, User } from "lucide-react";
+import { Mail, Lock, Heart, ArrowRight, Loader2, User, Droplet } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -23,6 +23,13 @@ import {
 } from "@/components/ui/form";
 import { Separator } from "@/components/ui/separator";
 import { LocaleSwitcher } from "@/components/locale-switcher";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const formSchema = z
   .object({
@@ -33,6 +40,7 @@ const formSchema = z
     role: z.enum(["donor", "hospital", "doctor", "admin"], {
       required_error: "Please select a role",
     }),
+    bloodType: z.string().optional(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
@@ -52,6 +60,7 @@ export default function RegisterPage() {
       name: "",
       confirmPassword: "",
       role: "donor",
+      bloodType: "",
     },
   });
 
@@ -194,6 +203,42 @@ export default function RegisterPage() {
                     </FormItem>
                   )}
                 />
+
+                {form.watch("role") === "donor" && (
+                  <FormField
+                    control={form.control}
+                    name="bloodType"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>{"Blood Type"}</FormLabel>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <FormControl>
+                            <div className="relative">
+                              <Droplet className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 z-10" />
+                              <SelectTrigger className="pl-10 h-12">
+                                <SelectValue placeholder="Select blood type" />
+                              </SelectTrigger>
+                            </div>
+                          </FormControl>
+                          <SelectContent>
+                            <SelectItem value="A+">A+</SelectItem>
+                            <SelectItem value="A-">A-</SelectItem>
+                            <SelectItem value="B+">B+</SelectItem>
+                            <SelectItem value="B-">B-</SelectItem>
+                            <SelectItem value="AB+">AB+</SelectItem>
+                            <SelectItem value="AB-">AB-</SelectItem>
+                            <SelectItem value="O+">O+</SelectItem>
+                            <SelectItem value="O-">O-</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                )}
 
                 {/* Role Buttons */}
                 <FormField

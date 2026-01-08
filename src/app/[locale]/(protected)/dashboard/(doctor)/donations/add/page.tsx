@@ -2,6 +2,8 @@
 import { auth } from "@/auth";
 import DonationForm from "@/components/dashboard/doctor/DonationForm";
 import { redirect } from "next/navigation";
+import { getAuthorizedAxios } from "@/lib/axios-auth";
+import axios from "axios";
 
 export default async function AddDonationPage({
   searchParams,
@@ -11,6 +13,7 @@ export default async function AddDonationPage({
   const session = await auth();
   const user = session?.user;
   const params = await searchParams;
+  const authAxios = await getAuthorizedAxios();
 
   if (!user || user.role !== "doctor") {
     return <div>Access Denied</div>;
@@ -20,7 +23,23 @@ export default async function AddDonationPage({
     donorId: params.donorId ? Number(params.donorId) : undefined,
     hospitalId: params.hospitalId ? Number(params.hospitalId) : undefined,
     appointmentId: params.appointmentId ? Number(params.appointmentId) : undefined,
+    donorName: "",
+    hospitalName: "",
   };
+
+  if (defaults.donorId) {
+    try {
+      const res = await authAxios.get(`${process.env.NEXT_PUBLIC_API_URL}/user/donors/${defaults.donorId}`);
+      if (res.data) defaults.donorName = res.data.name;
+    } catch (e) { console.error("Failed to fetch donor", e); }
+  }
+
+  if (defaults.hospitalId) {
+    try {
+      const res = await authAxios.get(`${process.env.NEXT_PUBLIC_API_URL}/user/hospitals/${defaults.hospitalId}`);
+      if (res.data) defaults.hospitalName = res.data.name;
+    } catch (e) { console.error("Failed to fetch hospital", e); }
+  }
 
   return (
     <div className="flex-1 space-y-4 p-8 pt-6">

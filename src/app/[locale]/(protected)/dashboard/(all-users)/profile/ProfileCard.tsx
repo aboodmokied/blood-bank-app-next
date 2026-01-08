@@ -194,7 +194,41 @@ export default function ProfileCard({ profile }: { profile: any }) {
           {/* Blood Type */}
           <p className="flex items-center gap-2">
             <Droplet size={16} /> Blood Type:{" "}
-            <b>{currentProfile.bloodType || "Not set"}</b>
+            {editField === "bloodType" ? (
+              <>
+                <select
+                  value={tempValue}
+                  onChange={(e) => setTempValue(e.target.value)}
+                  className="border rounded px-2 py-1 text-sm"
+                >
+                  <option value="">Not set</option>
+                  <option value="A+">A+</option>
+                  <option value="A-">A-</option>
+                  <option value="B+">B+</option>
+                  <option value="B-">B-</option>
+                  <option value="AB+">AB+</option>
+                  <option value="AB-">AB-</option>
+                  <option value="O+">O+</option>
+                  <option value="O-">O-</option>
+                </select>
+                <button
+                  onClick={() => saveEdit("bloodType")}
+                  className="bg-green-500 hover:bg-green-600 text-white p-1 rounded"
+                >
+                  <Save size={14} />
+                </button>
+              </>
+            ) : (
+              <>
+                <b>{currentProfile.bloodType || "Not set"}</b>
+                <button
+                  onClick={() => startEdit("bloodType", currentProfile.bloodType)}
+                  className="text-gray-500 hover:text-red-500"
+                >
+                  <Pencil size={14} />
+                </button>
+              </>
+            )}
           </p>
         </div>
       </div>
