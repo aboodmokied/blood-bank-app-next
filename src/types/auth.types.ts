@@ -4,6 +4,7 @@ export type User = {
   email: string;
   role: Role;
   accessToken?: string;
+  bloodType?: string;
 };
 
 export type Role = "donor" | "hospital" | "doctor" | "admin";

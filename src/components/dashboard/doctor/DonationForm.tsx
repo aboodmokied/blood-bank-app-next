@@ -24,8 +24,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
-import { getAuthorizedAxios } from "@/lib/axios-auth";
 import { handleApiError } from "@/lib/api-error";
+import axios from "axios";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { User, Building2 } from "lucide-react";
 
 const formSchema = z.object({
   donorId: z.coerce.number().min(1, "Donor ID is required"),
@@ -39,14 +42,18 @@ type DonationDefaults = {
   donorId?: number;
   hospitalId?: number;
   appointmentId?: number;
+  donorName?: string;
+  hospitalName?: string;
 };
 
 export default function DonationForm({ 
   doctorId, 
-  defaults 
+  defaults,
+  accessToken
 }: { 
   doctorId: number;
   defaults?: DonationDefaults;
+  accessToken: string;
 }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -62,13 +69,17 @@ export default function DonationForm({
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+    async function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
     try {
-      const authAxios = await getAuthorizedAxios();
-      await authAxios.post(`${process.env.NEXT_PUBLIC_API_URL}/donations`, {
+      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/donations`, {
         ...values,
-        doctorId,
+        doctorId: Number(doctorId),
+        appointmentId: defaults?.appointmentId ? Number(defaults.appointmentId) : undefined,
+      }, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
       });
 
       toast.success("Donation recorded successfully");
@@ -89,13 +100,50 @@ export default function DonationForm({
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 max-w-lg">
+    <div className="space-y-6">
+      {/* Summary Card for Donor and Hospital */}
+      {(defaults?.donorName || defaults?.hospitalName) && (
+        <Card className="bg-muted/50">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-lg font-medium">Donation Context</CardTitle>
+          </CardHeader>
+          <CardContent className="grid gap-4 md:grid-cols-2">
+            {defaults.donorName && (
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-blue-100 dark:bg-blue-900 rounded-full">
+                  <User className="h-4 w-4 text-blue-600 dark:text-blue-300" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">Donor</p>
+                  <p className="font-semibold">{defaults.donorName}</p>
+                  <Badge variant="outline" className="text-xs">ID: {defaults.donorId}</Badge>
+                </div>
+              </div>
+            )}
+            
+            {defaults.hospitalName && (
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-red-100 dark:bg-red-900 rounded-full">
+                  <Building2 className="h-4 w-4 text-red-600 dark:text-red-300" />
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">Hospital</p>
+                  <p className="font-semibold">{defaults.hospitalName}</p>
+                  <Badge variant="outline" className="text-xs">ID: {defaults.hospitalId}</Badge>
+                </div>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
+
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 max-w-lg">
         <FormField
           control={form.control}
           name="donorId"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className={defaults?.donorId ? "hidden" : "block"}>
               <FormLabel>Donor ID</FormLabel>
               <FormControl>
                 <Input type="number" placeholder="Enter Donor ID" {...field} />
@@ -109,7 +157,7 @@ export default function DonationForm({
           control={form.control}
           name="hospitalId"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className={defaults?.hospitalId ? "hidden" : "block"}>
               <FormLabel>Hospital ID</FormLabel>
               <FormControl>
                 <Input type="number" placeholder="Enter Hospital ID" {...field} />
@@ -165,5 +213,6 @@ export default function DonationForm({
         </Button>
       </form>
     </Form>
+    </div>
   );
 }

@@ -9,6 +9,7 @@ import {
   Heart,
   Calendar,
   Droplet,
+  Radio,
 } from "lucide-react";
 
 export const NAV_ITEMS: Record<
@@ -37,19 +38,22 @@ export const NAV_ITEMS: Record<
       path: "/dashboard/medical-history",
     },
     { label: "Profile", icon: User2Icon, path: "/dashboard/profile" },
+    { label: "Urgent Needs", icon: Radio, path: "/dashboard/donor-broadcasts" },
   ],
   hospital: [
     { label: "Dashboard", icon: Home, path: "/dashboard" },
     { label: "Blood Stock", icon: Droplet, path: "/dashboard/stock" },
     { label: "Appointments", icon: ClipboardList, path: "/dashboard/appointments" },
     { label: "Donors", icon: Users, path: "/dashboard/donors" },
+    { label: "Broadcasts", icon: Radio, path: "/dashboard/broadcasts" },
   ],
   doctor: [
     { label: "Dashboard", icon: Home, path: "/dashboard" },
     { label: "Today's Appointments", icon: Calendar, path: "/dashboard/appointments/today" },
-    { label: "Add Donation", icon: Droplet, path: "/dashboard/donations/add" },
+
     { label: "Patients", icon: Users, path: "/dashboard/patients" },
     { label: "Reports", icon: ClipboardList, path: "/dashboard/reports" },
+    { label: "Medical Tests", icon: ClipboardList, path: "/dashboard/tests" },
   ],
   admin: [
     { label: "Dashboard", icon: Home },

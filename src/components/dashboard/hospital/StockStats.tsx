@@ -4,7 +4,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Droplet } from "lucide-react";
 
-type StockStats = Record<string, { total: number }>;
+type StockStats = Record<string, { total: number; passed: number; failed: number }>;
 
 export default function StockStats({ stats }: { stats: StockStats }) {
   const bloodTypes = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
@@ -22,10 +22,15 @@ export default function StockStats({ stats }: { stats: StockStats }) {
               <Droplet className={`h-4 w-4 ${count < 5 ? 'text-red-500' : 'text-green-500'}`} />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{count}</div>
+              <div className="text-2xl font-bold">{stats[type]?.passed || 0}</div>
               <p className="text-xs text-muted-foreground">
                 Units available
               </p>
+              {stats[type]?.failed > 0 && (
+                <p className="text-xs text-red-500 mt-1">
+                  {stats[type]?.failed} Discarded
+                </p>
+              )}
             </CardContent>
           </Card>
         );

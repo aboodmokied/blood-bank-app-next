@@ -6,12 +6,7 @@ import { Button } from "../ui/button";
 import { Heart } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-const navLinks = [
-  { name: "home", href: "/" },
-  { name: "about", href: "#about" },
-  { name: "services", href: "#services" },
-  { name: "contact", href: "#contact" },
-];
+
 
 export default function LandingNavbar() {
   const t = useTranslations("header");

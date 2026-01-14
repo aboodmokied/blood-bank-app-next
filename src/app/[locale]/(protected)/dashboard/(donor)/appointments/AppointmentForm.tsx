@@ -19,7 +19,12 @@ interface Hospital {
   name: string;
 }
 
-export default function AppointmentForm() {
+interface AppointmentFormProps {
+  donorId: number;
+  preselectedHospitalId?: number;
+}
+
+export default function AppointmentForm({ donorId, preselectedHospitalId }: AppointmentFormProps) {
   // const [donorId, setDonorId] = useState("");
   const [hospitals, setHospitals] = useState<Hospital[]>([]);
   const [selectedHospital, setSelectedHospital] = useState<Hospital | null>(
@@ -28,14 +33,36 @@ export default function AppointmentForm() {
   const [date, setDate] = useState("");
   const [search, setSearch] = useState("");
 
+  // Fetch and set preselected hospital
+  useEffect(() => {
+    const fetchPreselectedHospital = async () => {
+      if (!preselectedHospitalId) return;
+      
+      try {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user/hospitals/${preselectedHospitalId}`, {
+          withCredentials: true,
+        });
+        if (res.data) {
+          setSelectedHospital(res.data);
+          setSearch(res.data.name);
+        }
+      } catch (error) {
+        console.error("Error fetching preselected hospital:", error);
+      }
+    };
+
+    fetchPreselectedHospital();
+  }, [preselectedHospitalId]);
+
   // Fetch hospitals whenever search changes
   useEffect(() => {
     const fetchHospitals = async () => {
       try {
-        const res = await axios.get(`/api/user/hospital`, {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/user/hospitals`, {
           params: { search },
           withCredentials: true,
         });
+        console.log({res})
         setHospitals(res.data.users);
       } catch (error) {
         console.error("Error fetching hospitals:", error);
@@ -57,9 +84,9 @@ export default function AppointmentForm() {
         return;
       }
       await axios.post(
-        `/api/appointments`,
+        `${process.env.NEXT_PUBLIC_API_URL}/appointments`,
         {
-          // donorId: Number(donorId),
+          donorId: Number(donorId),
           hospitalId: selectedHospital.id,
           date,
           status: "pending",
