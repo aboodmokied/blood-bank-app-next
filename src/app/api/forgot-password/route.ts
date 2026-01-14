@@ -5,7 +5,7 @@ export async function POST(req: Request) {
   const { email, role } = await req.json();
 
   try {
-    const res = await axios.post("http://localhost:5000/auth/reset-password", {
+    const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/reset-password`, {
       email,
       role,
     });

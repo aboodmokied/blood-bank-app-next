@@ -12,7 +12,7 @@ export async function POST(req: Request) {
   }
   try {
     const res = await axios.post(
-      "http://localhost:5000/auth/change-password",
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/change-password`,
       {
         email,
         role,

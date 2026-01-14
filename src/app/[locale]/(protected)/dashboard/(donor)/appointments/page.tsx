@@ -19,7 +19,7 @@ export default async function AppointmentPage({ searchParams }: AppointmentPageP
   let pagination = { page: 1, limit: 5, totalPages: 0 };
 
   try {
-     const res = await authAxios.get(`http://localhost:5000/appointments/donor/${user.id}`);
+     const res = await authAxios.get(`/appointments/donor/${user.id}`);
      appointments = res.data?.appointments || [];
      pagination = res.data?.pagination || pagination;
   } catch (error) {

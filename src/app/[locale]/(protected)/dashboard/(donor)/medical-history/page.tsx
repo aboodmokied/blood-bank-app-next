@@ -7,7 +7,7 @@ export default async function MedicalHistoryPage() {
   const authAxios = await getAuthorizedAxios();
   const session = await auth();
     const user = session?.user;
-  const { data } = await authAxios.get(`http://localhost:5000/medical-history/${user?.id}`);
+  const { data } = await authAxios.get(`/medical-history/${user?.id}`);
 
   return (
     <>

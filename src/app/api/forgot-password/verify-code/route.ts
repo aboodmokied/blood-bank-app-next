@@ -6,7 +6,7 @@ export async function POST(req: Request) {
   const { email, role, code } = await req.json();
 
   try {
-    const res = await axios.post("http://localhost:5000/auth/verify-code", {
+    const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/verify-code`, {
       email,
       role,
       code,

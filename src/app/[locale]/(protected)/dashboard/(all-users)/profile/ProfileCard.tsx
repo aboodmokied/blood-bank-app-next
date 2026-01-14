@@ -44,7 +44,7 @@ export default function ProfileCard({ profile }: { profile: any }) {
       formData.append("file", file);
 
       const res = await axios.patch(
-        `http://localhost:5000/profile/image/${profile.id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/profile/image/${profile.id}`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -65,7 +65,7 @@ export default function ProfileCard({ profile }: { profile: any }) {
         <Image
           src={
             currentProfile.photo
-              ? `http://localhost:5000${currentProfile.photo}`
+              ? `${process.env.NEXT_PUBLIC_API_URL}${currentProfile.photo}`
               : "/default-avatar.png"
           }
           alt="User image"

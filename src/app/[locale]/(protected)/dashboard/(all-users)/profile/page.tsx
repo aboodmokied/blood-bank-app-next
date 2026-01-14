@@ -16,7 +16,7 @@ export default async function ProfilePage() {
   
   let profile;
   try {
-     const res = await authAxios.get(`http://localhost:5000/profile/${role}/${id}`);
+     const res = await authAxios.get(`/profile/${role}/${id}`);
      profile = res.data.profile;
   } catch (error: any) {
     console.error(error);

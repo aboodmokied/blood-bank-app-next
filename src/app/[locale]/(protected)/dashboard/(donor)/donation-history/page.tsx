@@ -12,7 +12,7 @@ export default async function DonationHistoryPage() {
   let donations: Donation[] = [];
   try {
     const { data } = await authAxios.get(
-      `http://localhost:5000/donations/donor/${user?.id}`
+      `/donations/donor/${user?.id}`
     );
     donations = data.donations;
   } catch (error) {
