@@ -3,7 +3,7 @@ import { auth } from "@/auth";
 import { getAuthorizedAxios } from "@/lib/axios-auth";
 import StockStats from "@/components/dashboard/hospital/StockStats";
 import StockTable from "@/components/dashboard/hospital/StockTable";
-import { redirect } from "next/navigation";
+
 
 export default async function StockPage() {
   const session = await auth();

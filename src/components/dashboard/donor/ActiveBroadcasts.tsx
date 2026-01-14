@@ -24,7 +24,7 @@ type ActiveBroadcastsProps = {
   donorBloodType?: string;
 };
 
-export default function ActiveBroadcasts({ broadcasts, donorBloodType }: ActiveBroadcastsProps) {
+export default function ActiveBroadcasts({ broadcasts }: ActiveBroadcastsProps) {
   if (broadcasts.length === 0) {
     return (
       <Alert>

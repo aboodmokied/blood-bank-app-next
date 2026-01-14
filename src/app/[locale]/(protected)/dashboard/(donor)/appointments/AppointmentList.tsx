@@ -13,13 +13,7 @@ import {
   PaginationLink,
 } from "@/components/ui/pagination";
 
-interface Appointment {
-  id: number;
-  donorId: number;
-  hospitalId: number;
-  date: string;
-  status: string;
-}
+
 
 interface Props {
   initialData: {

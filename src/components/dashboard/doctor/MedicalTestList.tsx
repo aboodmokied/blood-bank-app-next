@@ -61,6 +61,7 @@ export default function MedicalTestList({ accessToken }: { accessToken?: string 
 
   useEffect(() => {
     if (accessToken) fetchDonations();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [accessToken]);
 
   if (loading) return <div>Loading...</div>;
