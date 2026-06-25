@@ -108,7 +108,9 @@
     "noAccount": "Don't have an account?",
     "signup": "Sign up to join LifeBank",
     "footerNote": "By signing in, you agree to help save lives through blood donation.",
-    "role": "Account type"
+    "role": "Account type",
+    "testAccountHint": "Test Credentials (Click to Autofill)",
+    "testPasswordHint": "Password for all: password123"
   },
   "roles": {
     "admin": "Admin",
@@ -148,7 +150,8 @@
     "success": "Code verified. Redirecting...",
     "error": "Verification failed. Try again.",
     "invalid": "Invalid code",
-    "footerNote": "Check your email for the verification code we sent."
+    "footerNote": "Check your email for the verification code we sent.",
+    "testCodeHint": "For testing, use code: 123456"
   },
   "resetPassword": {
     "title": "Set New Password",

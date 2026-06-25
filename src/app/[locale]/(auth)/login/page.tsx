@@ -8,7 +8,7 @@ import { Link, useRouter } from "@/i18n/navigation";
 import { signIn } from "next-auth/react";
 import { toast } from "sonner";
 
-import { Mail, Lock, Heart, ArrowRight, Loader2 } from "lucide-react";
+import { Mail, Lock, Heart, ArrowRight, Loader2, Info } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -46,6 +46,12 @@ export default function LoginPage() {
       role: "donor",
     },
   });
+
+  const fillCredentials = (email: string, role: "donor" | "hospital" | "doctor" | "admin") => {
+    form.setValue("email", email, { shouldValidate: true });
+    form.setValue("password", "password123", { shouldValidate: true });
+    form.setValue("role", role, { shouldValidate: true });
+  };
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const toastId = toast.loading(t("loading"));
@@ -232,6 +238,38 @@ export default function LoginPage() {
                 </Button>
               </form>
             </Form>
+
+            {/* Test Credentials Box */}
+            <div className="mt-6 p-4 bg-red-50/50 rounded-lg border border-red-200/50 text-sm">
+              <div className="flex items-center gap-2 font-semibold text-red-800 mb-2">
+                <Info className="h-4 w-4" />
+                <span>{t("testAccountHint")}</span>
+              </div>
+              <div className="space-y-2 text-gray-700">
+                {[
+                  { role: "donor", email: "donor0@test.com", icon: "🧑‍💉" },
+                  { role: "hospital", email: "city@hospital.com", icon: "🏥" },
+                  { role: "doctor", email: "house@hospital.com", icon: "🩺" },
+                  { role: "admin", email: "admin@test.com", icon: "🔐" },
+                ].map((item) => (
+                  <div
+                    key={item.role}
+                    onClick={() => fillCredentials(item.email, item.role as any)}
+                    className="flex justify-between items-center p-1.5 hover:bg-red-100/50 rounded cursor-pointer transition-colors duration-200"
+                    title={t("testAccountHint")}
+                  >
+                    <span className="flex items-center gap-1.5">
+                      <span>{item.icon}</span>
+                      <span className="font-medium text-xs capitalize">{tRoles(item.role)}:</span>
+                    </span>
+                    <code className="text-xs text-red-900 bg-red-100 px-1.5 py-0.5 rounded font-mono">{item.email}</code>
+                  </div>
+                ))}
+              </div>
+              <p className="text-xs text-gray-500 mt-2 text-center border-t pt-1.5 border-dashed border-red-200/50">
+                {t("testPasswordHint")}
+              </p>
+            </div>
 
             <Separator className="my-8" />
 

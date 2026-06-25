@@ -20,7 +20,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { ShieldCheck, Loader2, KeyRound } from "lucide-react";
+import { ShieldCheck, Loader2, KeyRound, Info } from "lucide-react";
 import { useRouter } from "@/i18n/navigation";
 
 const formSchema = z.object({
@@ -104,6 +104,13 @@ export default function EnterCodeClient({ role }: { role: string }) {
                           />
                         </div>
                       </FormControl>
+                      <div 
+                        onClick={() => form.setValue("code", "123456", { shouldValidate: true })}
+                        className="flex items-center gap-1.5 text-xs text-amber-600 mt-1.5 cursor-pointer hover:underline bg-amber-50/50 p-1.5 rounded border border-amber-200/30 select-none"
+                      >
+                        <Info className="h-3.5 w-3.5 flex-shrink-0" />
+                        <span>{t("testCodeHint")}</span>
+                      </div>
                       <FormMessage />
                     </FormItem>
                   )}
